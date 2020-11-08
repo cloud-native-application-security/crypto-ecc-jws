@@ -1,6 +1,6 @@
 package com.example.warehouse;
 
-import com.example.util.RsaSigner;
+import com.example.util.EllipticCurveSigner;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 class RefundController {
 
   private final RefundService refundService;
-  private final RsaSigner rsaSigner;
+  private final EllipticCurveSigner rsaSigner;
 
   RefundController(RefundService refundService) {
     this.refundService = refundService;
-    this.rsaSigner = new RsaSigner();
+    this.rsaSigner = new EllipticCurveSigner();
   }
 
   @GetMapping("/publicKey")

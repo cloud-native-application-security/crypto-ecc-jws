@@ -1,6 +1,6 @@
 package com.example.payments;
 
-import com.example.util.RsaVerifier;
+import com.example.util.EllipticCurveVerifier;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ public class PaymentsController {
 
     var warehousePublicKey =
         restTemplate.getForObject("http://localhost:8082/publicKey", String.class);
-    var rsaVerifier = new RsaVerifier(warehousePublicKey);
+    var rsaVerifier = new EllipticCurveVerifier(warehousePublicKey);
 
     String refundsJws = restTemplate.getForObject("http://localhost:8082/refunds", String.class);
     String refundsJson = rsaVerifier.verify(refundsJws).orElseThrow();

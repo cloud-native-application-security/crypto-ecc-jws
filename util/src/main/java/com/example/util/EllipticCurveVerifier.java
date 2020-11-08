@@ -2,19 +2,19 @@ package com.example.util;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSObject;
-import com.nimbusds.jose.crypto.RSASSAVerifier;
+import com.nimbusds.jose.crypto.Ed25519Verifier;
 import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.OctetKeyPair;
 import java.text.ParseException;
 import java.util.Optional;
 
-public class RsaVerifier {
+public class EllipticCurveVerifier {
 
-  private final RSAKey key;
+  private final OctetKeyPair key;
 
-  public RsaVerifier(String jwk) {
+  public EllipticCurveVerifier(String jwk) {
     try {
-      this.key = JWK.parse(jwk).toRSAKey();
+      this.key = JWK.parse(jwk).toOctetKeyPair();
     } catch (ParseException e) {
       throw new RuntimeException(e);
     }
@@ -27,7 +27,7 @@ public class RsaVerifier {
   public Optional<String> verify(String jws) {
     try {
       JWSObject jwsObject = JWSObject.parse(jws);
-      if (jwsObject.verify(new RSASSAVerifier(key))) {
+      if (jwsObject.verify(new Ed25519Verifier(key))) {
         return Optional.of(jwsObject.getPayload().toString());
       } else {
         return Optional.empty();

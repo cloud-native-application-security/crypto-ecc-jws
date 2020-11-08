@@ -1,7 +1,7 @@
 package com.example.warehouse;
 
 import com.example.util.JsonUtils;
-import com.example.util.RsaVerifier;
+import com.example.util.EllipticCurveVerifier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,7 @@ class WarehouseApplicationTests {
 
     var serverUrl = "http://localhost:" + port;
     var publicKeyJwk = restTemplate.getForObject(serverUrl + "/publicKey", String.class);
-    var rsaCipher = new RsaVerifier(publicKeyJwk);
+    var rsaCipher = new EllipticCurveVerifier(publicKeyJwk);
 
     var url = "http://localhost:" + port + "/refunds";
     var responseJws = restTemplate.getForObject(serverUrl + "/refunds", String.class);
